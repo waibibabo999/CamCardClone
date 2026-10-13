@@ -19,6 +19,8 @@
       postalCode: String?
       notes: String?
       tags: [String]
+      additionalEmails: [String]
+      additionalPhones: [String]
       createdAt: Date
       updatedAt: Date
       ocrRawText: String?
@@ -33,6 +35,7 @@
 - 图片文件存 `Documents/Images/`。
 - 元数据存 `Documents/businesscards.json`。
 - `tags` 使用字符串数组，便于 Codable 与搜索。
+- `additionalEmails` / `additionalPhones` 用于多邮箱 / 多电话场景；`email` / `mobile` 仍作为主字段保留，与作业第十节的单值字段对应。导出时与主字段合并进 `ContactExportPayload` 的数组。
 - `ocrRawText` 保存 OCR 原始输出，用于追溯与错误分析。
 
 ## 二、Tag
@@ -92,12 +95,15 @@
       department: String?
       postalCode: String?
       notes: String?
+      additionalEmails: [String]?
+      additionalPhones: [String]?
     }
 
 ### 规则
 
 - 每张测试名片对应一个 Ground Truth JSON。
 - 字段不存在时写 null 或不写该字段。
+- `additionalEmails` / `additionalPhones` 仅在多邮箱 / 多电话场景出现，与 `BusinessCard` 的对应字段对齐。
 - 用于计算字段级准确率。
 - 不允许在 Ground Truth 中写入测试名片上不存在的值。
 
@@ -112,13 +118,18 @@
     OCRObservation {
       text: String
       confidence: Double
-      boundingBox: CGRect
+      boundingBox: NormalizedRect
+    }
+
+    NormalizedRect {
+      x, y, width, height: Double
     }
 
 ### 规则
 
 - `rawText` 是 OCR 的完整原始输出。
 - `observations` 用于字段解析与错误分析。
+- `NormalizedRect` 是归一化矩形（相对原图，左上原点，取值 0...1）。不直接用 `CGRect`，避免其编码表示不稳定。
 - OCR 原始结果必须保存，不允许只保存最终字段。
 
 ## 六、持久化格式

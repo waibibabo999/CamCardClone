@@ -48,7 +48,7 @@
 | D2 | 测试名片自建 | 作业建议教师提供 30～50 张，实际未提供。自建 42 张，见 `references/test-images/README.md`，由 `tools/generate_test_cards.ps1` 可重复生成 |
 | D3 | 项目期间不升级 iPhone 系统 | 系统版本是参考环境的一部分，中途升级会使已记录的截图与 Ground Truth 失效 |
 | D4 | 相册权限路径不存在 | 采用 SwiftUI `PhotosPicker`（基于 PHPicker），系统**不会**弹出相册读取权限，因此 T03/T20 中"相册权限拒绝"无法触发。处理方式：在规格与测试报告中如实记录"系统设计如此，无需权限"，而不是伪造该用例；导出图片到相册才需要 `NSPhotoLibraryAddUsageDescription` |
-| D5 | 多邮箱无法用现有模型表达 | `BusinessCard` 只有单个 `email` / `mobile` / `phone` / `fax` 字段，但作业 7.4 要求处理"多 Email"，`data-model.md` 第七节又要求导出时"多 Email 全部导出"。**待决议**：将字段改为数组（`emails: [String]`），或新增 `additionalEmails` / `additionalPhones` 数组字段。决议后必须同步更新 `design/data-model.md` 与 `changes/change-history.md` |
+| D5 | 多邮箱无法用现有模型表达（已决议） | 结论：保留主字段 `email` / `mobile`，新增 `additionalEmails: [String]` / `additionalPhones: [String]` 数组字段，导出时合并。已于 2026-10-13 落地，`design/data-model.md` 与 `changes/change-history.md` 已更新 |
 | D6 | 参考语言定为简体中文 | CamCard 可选简体中文 / 繁体中文 / 英语。选简体中文的理由：测试名片以简体为主、中英混排识别效果最好、与自制 App 的中文界面一致。采集参考素材前先切换，中途不再更改 |
 | D7 | 参考 App 的多项 AI 增强功能不复刻 | 采集发现参考 App 会补全地址前缀"中国"、生成拼音排序名、自动匹配公司库、展示企业工商情报。作业第八节明确禁止"补全名片上不存在的信息"，因此本项目只做 OCR + 确定性字段解析，不做任何补全。属作业授权的偏差，须写入报告 |
 | D8 | 参考 App 无独立"扫描入口"页 | 参考实现是底部中央相机按钮直达相机，相册入口在相机页内。本项目保留独立扫描入口页，属合理简化，须写入报告 |
