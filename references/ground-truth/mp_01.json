@@ -1,0 +1,18 @@
+{
+  "id": "mp_01",
+  "name": "罗建华",
+  "company": "中远精密制造有限公司",
+  "jobTitle": "生产部经理",
+  "department": null,
+  "mobile": "136-5555-6666",
+  "phone": "0512-6677-8899",
+  "fax": "0512-6677-8800",
+  "email": "luojianhua@example.com",
+  "website": null,
+  "address": null,
+  "postalCode": null,
+  "notes": null,
+  "additionalEmails": [
+    "jh.luo@example.com"
+  ]
+}

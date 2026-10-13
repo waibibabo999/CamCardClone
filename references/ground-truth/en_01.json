@@ -1,0 +1,15 @@
+{
+  "id": "en_01",
+  "name": "David Chen",
+  "company": "ABC Technologies Inc.",
+  "jobTitle": "Technical Director",
+  "department": null,
+  "mobile": "+1-415-555-0142",
+  "phone": null,
+  "fax": null,
+  "email": "david.chen@example.com",
+  "website": "www.abc-tech-example.com",
+  "address": null,
+  "postalCode": null,
+  "notes": null
+}
