@@ -148,11 +148,17 @@
 ### CameraService
 
     protocol CameraService {
-      func requestPermission() async -> PermissionStatus
-      func startSession() async throws
+      var session: AVCaptureSession { get }
+      func startSession() throws
       func stopSession()
-      func capturePhoto() async throws -> Data
+      func capturePhoto(completion: @escaping (Result<Data, Error>) -> Void)
+      func makePreviewLayer() -> AVCaptureVideoPreviewLayer
     }
+
+规则：
+
+- 相机权限统一由 `PermissionService` 负责，`CameraService` 不处理权限。
+- `capturePhoto` 用回调返回 JPEG 数据，调用方（ViewModel）负责切回主线程更新 UI。
 
 ### CardDetectionService
 

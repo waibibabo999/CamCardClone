@@ -15,3 +15,10 @@
 
 - 原因：`CGRect` 的 Codable 表示不稳定，改用自建 `NormalizedRect`（x/y/width/height: Double，左上原点，0...1）。
 - 影响：`OCRService` 后续实现需用 `NormalizedRect` 而非 `CGRect`。
+
+### 批次 B：权限 / 相机 / 相册导入 / 区域检测 / 校正
+
+- 新增 `PermissionService`（相机 + 相册写入权限）、`CameraService`（AVFoundation 后置相机）、`CardDetectionService`（Vision 矩形检测）、`CardGeometry`（纯坐标换算，可单测）。
+- 新增 `CaptureView`、`DetectionView`、`CorrectionView` 及各自 ViewModel，`ScannerView` 改为流程编排（拍摄 → 检测 → 校正 → 结果）。
+- 接口调整：`CameraService` 不再负责权限，新增 `session` / `makePreviewLayer`，`capturePhoto` 改为回调式。
+- 坐标约定：检测结果与 Core Image 同为**左下原点**归一化坐标，显示层再翻转到左上原点，换算集中在 `CardGeometry`。
