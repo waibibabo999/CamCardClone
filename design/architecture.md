@@ -186,7 +186,13 @@
 ### FieldParserService
 
     protocol FieldParserService {
-      func parse(ocrResult: OCRResult) -> [CardField]
+      func parse(ocrResult: OCRResult) -> ParsedFields
+    }
+
+    ParsedFields {
+      fields: [CardField]
+      additionalEmails: [String]
+      additionalPhones: [String]
     }
 
 规则：
@@ -195,6 +201,7 @@
 - 无法确认的字段返回 value = nil。
 - 不允许虚构原图中不存在的信息。
 - 不修改 BusinessCard 数据模型。
+- 多邮箱 / 多电话放 `additionalEmails` / `additionalPhones`，因为单个 `CardField` 只能承载一个值。
 
 ### ExportService
 

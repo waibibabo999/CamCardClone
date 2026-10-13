@@ -22,3 +22,13 @@
 - 新增 `CaptureView`、`DetectionView`、`CorrectionView` 及各自 ViewModel，`ScannerView` 改为流程编排（拍摄 → 检测 → 校正 → 结果）。
 - 接口调整：`CameraService` 不再负责权限，新增 `session` / `makePreviewLayer`，`capturePhoto` 改为回调式。
 - 坐标约定：检测结果与 Core Image 同为**左下原点**归一化坐标，显示层再翻转到左上原点，换算集中在 `CardGeometry`。
+
+### 批次 C：OCR / 字段解析 / 人工确认 / 保存
+
+- 新增 `VisionOCRService`（Vision `VNRecognizeTextRequest`，zh-Hans + en-US，返回 `OCRResult`）。
+- 新增 `RuleBasedFieldParser`：标签 + 正则的确定性解析，无法确认的字段返回 nil；多邮箱 / 多电话进 `ParsedFields.additionalEmails / additionalPhones`。
+- 新增 `VerificationView` / `VerificationViewModel`：OCR 处理中 → 可编辑字段表单（含 OCR 原文展示）→ 保存。
+- `ScannerView` 主链补全：拍摄 → 检测 → 校正 → OCR → 人工确认 → 保存 → 返回名片夹。保存时把原图 / 处理图写入 `ImageStore`，元数据写入 `BusinessCardStore`。
+- 接口调整：`FieldParserService.parse` 返回 `ParsedFields`（原为 `[CardField]`）。
+- 新增 `FieldParserServiceTests`：中英文标签卡、缺失字段不虚构、多邮箱、多电话。
+- 目录简化：`PROJECT_RULES.md` 里的 `Features/OCR`、`Features/Extraction` 暂不单设页面，OCR 与字段解析并入 `Features/Verification`（识别中状态 → 可编辑字段表单），服务仍按约定放 `Core/Services`。

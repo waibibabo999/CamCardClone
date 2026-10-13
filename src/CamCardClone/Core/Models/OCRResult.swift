@@ -1,6 +1,6 @@
 import Foundation
 
-/// 归一化矩形：相对原图，坐标原点在左上角，四个值取值范围均为 0...1。
+/// 归一化矩形：相对原图，坐标原点在**左下角**（Vision 约定），四个值取值范围均为 0...1。
 struct NormalizedRect: Codable, Hashable {
     var x: Double
     var y: Double
