@@ -126,6 +126,8 @@ OCR、姓名、公司、职位、电话、Email、地址识别等，使用教师
       README.md
       PROJECT_RULES.md
       docs/
+        lab-playbook.md
+        reference-environment.md
       spec/
         requirements.md
         behavior.md
@@ -152,6 +154,8 @@ OCR、姓名、公司、职位、电话、Email、地址识别等，使用教师
         test-images/
         ground-truth/
       drafts/
+      tools/
+        generate_test_cards.ps1
       src/
 
 ## 八、Reference Test Suite
@@ -162,6 +166,8 @@ OCR、姓名、公司、职位、电话、Email、地址识别等，使用教师
 
 - 机房外：规格、设计、测试用例、参考截图、测试名片、Ground Truth、TRAE 提示词、AI 记录、报告
 - 机房内：Xcode 项目、编译、真机调试、模拟器/真机截图、自动测试、PDF/VCF 导出、Git 提交
+
+> 具体到"去机房前 / 机房中 / 机房后"要做什么，见 `docs/lab-playbook.md`。
 
 ## 十、状态
 
