@@ -32,3 +32,9 @@
 - 接口调整：`FieldParserService.parse` 返回 `ParsedFields`（原为 `[CardField]`）。
 - 新增 `FieldParserServiceTests`：中英文标签卡、缺失字段不虚构、多邮箱、多电话。
 - 目录简化：`PROJECT_RULES.md` 里的 `Features/OCR`、`Features/Extraction` 暂不单设页面，OCR 与字段解析并入 `Features/Verification`（识别中状态 → 可编辑字段表单），服务仍按约定放 `Core/Services`。
+
+### 扫描流程增加入口页
+
+- 原因：模拟器没有摄像头，原先"从相册导入"的入口藏在相机页内，导致模拟器上无法验证检测 → 校正 → OCR → 保存主链；真机上相机不可用时同样会被堵死。
+- 变更：`ScannerView` 增加 `.entry` 步骤，入口页并列提供「拍摄名片」与「从相册导入」，两条路径都汇入检测流程。
+- 与 D8 的关系：参考 App 是按底部相机键直达拍摄，本项目的入口页属于合理简化；现在它同时承担"相机不可用时的兜底入口"。
