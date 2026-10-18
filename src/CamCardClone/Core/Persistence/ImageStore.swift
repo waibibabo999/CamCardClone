@@ -38,7 +38,7 @@ struct ImageStore {
         guard let image = UIImage(data: data) else {
             throw ImageStoreError.corruptedImage(fileName)
         }
-        return image
+        return image.normalizedUp
     }
 
     func deleteImage(fileName: String) throws {

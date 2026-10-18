@@ -102,7 +102,7 @@ private struct DraggableCorner: View {
     let point: CGPoint
     let onMove: (Int, CGPoint) -> Void
 
-    @State private var anchor: CGPoint?
+    @State private var anchor: CGPoint? = nil
 
     var body: some View {
         Circle()

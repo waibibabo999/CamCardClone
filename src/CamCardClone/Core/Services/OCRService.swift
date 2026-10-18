@@ -52,7 +52,11 @@ struct VisionOCRService: OCRService {
             request.usesLanguageCorrection = true
             request.recognitionLanguages = languages
 
-            let handler = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
+            let handler = VNImageRequestHandler(
+                cgImage: cgImage,
+                orientation: image.cgImagePropertyOrientation,
+                options: [:]
+            )
             do {
                 try handler.perform([request])
             } catch {

@@ -7,6 +7,7 @@ import UIKit
 final class VerificationViewModel {
     enum Phase: Equatable {
         case processing
+        case noResult
         case editing
         case saved
         case failed(String)
@@ -49,7 +50,8 @@ final class VerificationViewModel {
             fields = parsed.fields
             additionalEmails = parsed.additionalEmails
             additionalPhones = parsed.additionalPhones
-            phase = .editing
+            let hasAnyValue = fields.contains { $0.value != nil }
+            phase = hasAnyValue ? .editing : .noResult
         } catch {
             phase = .failed(error.localizedDescription)
         }
@@ -60,6 +62,19 @@ final class VerificationViewModel {
         await run()
     }
 
+    func beginManualEntry() {
+        fields = FieldKey.allCases.map { CardField(key: $0, value: nil, source: .empty) }
+        phase = .editing
+    }
+
+    func resetToOCR() {
+        let result = parser.parse(ocrResult: OCRResult(rawText: rawText))
+        fields = result.fields
+        additionalEmails = result.additionalEmails
+        additionalPhones = result.additionalPhones
+        phase = fields.contains { $0.value != nil } ? .editing : .noResult
+    }
+
     func updateField(key: FieldKey, value: String?) {
         guard let index = fields.firstIndex(where: { $0.key == key }) else { return }
         fields[index].value = value
@@ -68,6 +83,22 @@ final class VerificationViewModel {
 
     func value(for key: FieldKey) -> String? {
         fields.first(where: { $0.key == key })?.value
+    }
+
+    func setAdditionalPhones(_ text: String) {
+        additionalPhones = lines(from: text)
+    }
+
+    func setAdditionalEmails(_ text: String) {
+        additionalEmails = lines(from: text)
+    }
+
+    var additionalPhonesText: String {
+        additionalPhones.joined(separator: "\n")
+    }
+
+    var additionalEmailsText: String {
+        additionalEmails.joined(separator: "\n")
     }
 
     func save() {
@@ -87,30 +118,46 @@ final class VerificationViewModel {
 
         let id = UUID()
         let originalFileName = try imageStore.saveOriginal(originalData, cardID: id)
-        let processedFileName = try imageStore.saveProcessed(processedData, cardID: id)
+        do {
+            let processedFileName = try imageStore.saveProcessed(processedData, cardID: id)
+            let card = BusinessCard(
+                id: id,
+                originalImageFileName: originalFileName,
+                processedImageFileName: processedFileName,
+                name: value(for: .name),
+                company: value(for: .company),
+                jobTitle: value(for: .jobTitle),
+                mobile: value(for: .mobile),
+                phone: value(for: .phone),
+                fax: value(for: .fax),
+                email: value(for: .email),
+                website: value(for: .website),
+                address: value(for: .address),
+                department: value(for: .department),
+                postalCode: value(for: .postalCode),
+                notes: value(for: .notes),
+                tags: [],
+                additionalEmails: additionalEmails,
+                additionalPhones: additionalPhones,
+                ocrRawText: rawText
+            )
+            do {
+                try store.add(card)
+            } catch {
+                try? imageStore.deleteImage(fileName: originalFileName)
+                try? imageStore.deleteImage(fileName: processedFileName)
+                throw error
+            }
+        } catch {
+            try? imageStore.deleteImage(fileName: originalFileName)
+            throw error
+        }
+    }
 
-        let card = BusinessCard(
-            id: id,
-            originalImageFileName: originalFileName,
-            processedImageFileName: processedFileName,
-            name: value(for: .name),
-            company: value(for: .company),
-            jobTitle: value(for: .jobTitle),
-            mobile: value(for: .mobile),
-            phone: value(for: .phone),
-            fax: value(for: .fax),
-            email: value(for: .email),
-            website: value(for: .website),
-            address: value(for: .address),
-            department: value(for: .department),
-            postalCode: value(for: .postalCode),
-            notes: value(for: .notes),
-            tags: [],
-            additionalEmails: additionalEmails,
-            additionalPhones: additionalPhones,
-            ocrRawText: rawText
-        )
-        try store.add(card)
+    private func lines(from text: String) -> [String] {
+        text.components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
     }
 }
 

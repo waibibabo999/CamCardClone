@@ -7,6 +7,7 @@ import Vision
 struct CardDetectionResult: Equatable {
     var corners: [CGPoint]
     var confidence: Double
+    var usedFallback: Bool = false
 }
 
 protocol CardDetectionService {
@@ -40,8 +41,13 @@ struct VisionCardDetectionService: CardDetectionService {
                     continuation.resume(throwing: error)
                     return
                 }
-                guard let observation = request.results?.first as? VNRectangleObservation else {
-                    continuation.resume(throwing: CardDetectionError.noCardFound)
+                let observations = (request.results as? [VNRectangleObservation]) ?? []
+                guard let observation = Self.bestCardObservation(from: observations) else {
+                    continuation.resume(returning: CardDetectionResult(
+                        corners: CardGeometry.fullFrameCorners,
+                        confidence: 0,
+                        usedFallback: true
+                    ))
                     return
                 }
                 let corners = [
@@ -52,20 +58,51 @@ struct VisionCardDetectionService: CardDetectionService {
                 ]
                 continuation.resume(returning: CardDetectionResult(
                     corners: corners,
-                    confidence: Double(observation.confidence)
+                    confidence: Double(observation.confidence),
+                    usedFallback: false
                 ))
             }
-            request.minimumAspectRatio = 0.4
-            request.maximumAspectRatio = 1.0
-            request.quadratureTolerance = 20
-            request.minimumSize = 0.2
+            request.minimumAspectRatio = 0.3
+            request.maximumAspectRatio = 3.0
+            request.quadratureTolerance = 30
+            request.minimumSize = 0.15
+            request.maximumObservations = 20
 
-            let handler = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
+            let handler = VNImageRequestHandler(
+                cgImage: cgImage,
+                orientation: image.cgImagePropertyOrientation,
+                options: [:]
+            )
             do {
                 try handler.perform([request])
             } catch {
                 continuation.resume(throwing: error)
             }
         }
+    }
+
+    /// Vision can return a logo, a photo, or another small rectangle before the
+    /// actual card. Prefer the largest plausible rectangle instead of the first
+    /// observation. If every candidate is tiny, return nil so the caller can
+    /// fall back to the full image for manual adjustment.
+    private static func bestCardObservation(
+        from observations: [VNRectangleObservation]
+    ) -> VNRectangleObservation? {
+        let plausible = observations.filter { observation in
+            let box = observation.boundingBox
+            let area = Double(box.width * box.height)
+            let shortSide = min(box.width, box.height)
+            let ratio = Double(max(box.width, box.height) / max(shortSide, 0.001))
+            return area >= 0.03 && ratio >= 0.3 && ratio <= 3.0
+        }
+        guard let best = plausible.max(by: {
+            let lhs = $0.boundingBox
+            let rhs = $1.boundingBox
+            return lhs.width * lhs.height < rhs.width * rhs.height
+        }) else {
+            return nil
+        }
+        let bestBox = best.boundingBox
+        return bestBox.width * bestBox.height >= 0.06 ? best : nil
     }
 }

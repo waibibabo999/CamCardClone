@@ -171,4 +171,27 @@ OCR、姓名、公司、职位、电话、Email、地址识别等，使用教师
 
 ## 十、状态
 
-进行中。
+主流程、详情、编辑、搜索、标签、VCF/联系人导出已实现，工程文件已入库。
+
+## 十一、构建与测试
+
+用 Xcode 打开：
+
+    src/CamCardClone.xcodeproj
+
+工程包含：
+
+- `CamCardClone` App target
+- `CamCardCloneTests` 单元测试 target
+- `CamCardCloneUITests` UI 测试 target（T01/T02 已编写）
+
+命令行无签名构建：
+
+    xcodebuild \
+      -project src/CamCardClone.xcodeproj \
+      -scheme CamCardClone \
+      -destination 'generic/platform=iOS' \
+      CODE_SIGNING_ALLOWED=NO \
+      build
+
+当前验证状态见 `verify/test-results.md`。相机、相册、Vision OCR 和 UI 流程仍需在真机或可用模拟器上完成最终验收。

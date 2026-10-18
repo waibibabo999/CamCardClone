@@ -67,8 +67,16 @@ struct DetectionView: View {
                 }
             }
         case .detected(let corners):
-            Button("确认") { onDetected(corners) }
-                .buttonStyle(.borderedProminent)
+            VStack(spacing: 10) {
+                if viewModel.usedFallback {
+                    Text("未检测到完整名片，已使用整张图片。请在下一步手动调整四角。")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+                Button("确认") { onDetected(corners) }
+                    .buttonStyle(.borderedProminent)
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import UIKit
 struct VerificationView: View {
     let onSaved: () -> Void
     let onRetake: () -> Void
+    let onCancel: () -> Void
 
     @State private var viewModel: VerificationViewModel
 
@@ -13,10 +14,12 @@ struct VerificationView: View {
         processedImage: UIImage,
         store: BusinessCardStore,
         onSaved: @escaping () -> Void,
-        onRetake: @escaping () -> Void
+        onRetake: @escaping () -> Void,
+        onCancel: @escaping () -> Void
     ) {
         self.onSaved = onSaved
         self.onRetake = onRetake
+        self.onCancel = onCancel
         _viewModel = State(initialValue: VerificationViewModel(
             originalImage: originalImage,
             processedImage: processedImage,
@@ -50,6 +53,8 @@ struct VerificationView: View {
             switch viewModel.phase {
             case .processing:
                 ProgressView("正在识别名片文字…")
+            case .noResult:
+                noResultView
             case .failed(let message):
                 failedView(message)
             case .editing, .saved:
@@ -58,6 +63,11 @@ struct VerificationView: View {
         }
         .navigationTitle("确认名片信息")
         .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("取消") { onCancel() }
+            }
+        }
         .task { await viewModel.run() }
     }
 
@@ -68,15 +78,28 @@ struct VerificationView: View {
                     fieldRow(key: row.key, label: row.label)
                 }
 
-                if !viewModel.additionalEmails.isEmpty {
-                    Text("识别到的其他邮箱：\(viewModel.additionalEmails.joined(separator: "、"))")
-                        .font(.footnote)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("其他电话（每行一个）")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
+                    TextEditor(text: Binding(
+                        get: { viewModel.additionalPhonesText },
+                        set: { viewModel.setAdditionalPhones($0) }
+                    ))
+                    .frame(minHeight: 54)
+                    .font(.footnote)
                 }
-                if !viewModel.additionalPhones.isEmpty {
-                    Text("识别到的其他电话：\(viewModel.additionalPhones.joined(separator: "、"))")
-                        .font(.footnote)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("其他邮箱（每行一个）")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
+                    TextEditor(text: Binding(
+                        get: { viewModel.additionalEmailsText },
+                        set: { viewModel.setAdditionalEmails($0) }
+                    ))
+                    .frame(minHeight: 54)
+                    .font(.footnote)
                 }
 
                 DisclosureGroup("OCR 原始文本") {
@@ -86,14 +109,18 @@ struct VerificationView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
-                HStack(spacing: 16) {
+                HStack(spacing: 12) {
+                    Button("取消") { onCancel() }
+                        .buttonStyle(.bordered)
                     Button("重拍") { onRetake() }
                         .buttonStyle(.bordered)
-                    Button("保存") { viewModel.save() }
-                        .buttonStyle(.borderedProminent)
-                        .frame(maxWidth: .infinity)
+                    Button("恢复识别结果") { viewModel.resetToOCR() }
+                        .buttonStyle(.bordered)
                 }
-                .padding(.top, 8)
+                Button("保存") { viewModel.save() }
+                    .buttonStyle(.borderedProminent)
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 8)
             }
             .padding()
         }
@@ -158,6 +185,30 @@ struct VerificationView: View {
                 Button("重拍") { onRetake() }
                     .buttonStyle(.bordered)
                 Button("重试") { Task { await viewModel.retry() } }
+                    .buttonStyle(.borderedProminent)
+                Button("手动录入") { viewModel.beginManualEntry() }
+                    .buttonStyle(.bordered)
+            }
+        }
+        .padding()
+    }
+
+    private var noResultView: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "text.magnifyingglass")
+                .font(.system(size: 40))
+            Text("没有识别到文字")
+                .font(.headline)
+            Text("可以重试、重拍，或者手动录入名片信息。")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            HStack {
+                Button("重拍") { onRetake() }
+                    .buttonStyle(.bordered)
+                Button("重试") { Task { await viewModel.retry() } }
+                    .buttonStyle(.bordered)
+                Button("手动录入") { viewModel.beginManualEntry() }
                     .buttonStyle(.borderedProminent)
             }
         }

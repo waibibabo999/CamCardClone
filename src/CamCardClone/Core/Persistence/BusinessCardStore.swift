@@ -10,6 +10,7 @@ import Observation
 final class BusinessCardStore {
     private(set) var cards: [BusinessCard] = []
     private(set) var tags: [Tag] = []
+    private(set) var loadError: String?
 
     private let fileURL: URL
     private let encoder: JSONEncoder
@@ -38,10 +39,15 @@ final class BusinessCardStore {
         decoder.dateDecodingStrategy = .iso8601
         self.decoder = decoder
 
-        try? load()
+        do {
+            try load()
+        } catch {
+            loadError = "读取名片数据失败：\(error.localizedDescription)"
+        }
     }
 
     func load() throws {
+        loadError = nil
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
             cards = []
             tags = []
@@ -53,9 +59,17 @@ final class BusinessCardStore {
         tags = container.tags
     }
 
+    func clearLoadError() {
+        loadError = nil
+    }
+
     func persist() throws {
         let container = PersistenceContainer(version: 1, cards: cards, tags: tags)
         let data = try encoder.encode(container)
+        try FileManager.default.createDirectory(
+            at: fileURL.deletingLastPathComponent(),
+            withIntermediateDirectories: true
+        )
         try data.write(to: fileURL, options: [.atomic])
     }
 
@@ -70,7 +84,9 @@ final class BusinessCardStore {
     }
 
     func update(_ card: BusinessCard) throws {
-        guard let index = cards.firstIndex(where: { $0.id == card.id }) else { return }
+        guard let index = cards.firstIndex(where: { $0.id == card.id }) else {
+            throw BusinessCardStoreError.cardNotFound
+        }
         var updated = card
         updated.updatedAt = Date()
         cards[index] = updated
@@ -87,14 +103,16 @@ final class BusinessCardStore {
         let needle = keyword.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         guard !needle.isEmpty else { return cards }
         return cards.filter { card in
-            let haystacks = [
+            var haystacks = [
                 card.name, card.company, card.jobTitle,
                 card.mobile, card.phone, card.fax, card.email,
                 card.website, card.address, card.department, card.postalCode
-            ]
-            return haystacks
-                .compactMap { $0 }
-                .contains { $0.lowercased().contains(needle) }
+            ].compactMap { $0 }
+            haystacks.append(contentsOf: card.additionalPhones)
+            haystacks.append(contentsOf: card.additionalEmails)
+            haystacks.append(contentsOf: card.tags)
+            if let notes = card.notes { haystacks.append(notes) }
+            return haystacks.contains { $0.lowercased().contains(needle) }
         }
     }
 
@@ -104,7 +122,8 @@ final class BusinessCardStore {
 
     func addTag(_ name: String) throws {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty, !tags.contains(where: { $0.name == trimmed }) else { return }
+        guard !trimmed.isEmpty else { throw BusinessCardStoreError.emptyTag }
+        guard !tags.contains(where: { $0.name == trimmed }) else { return }
         tags.append(Tag(name: trimmed))
         try persist()
     }
@@ -115,5 +134,26 @@ final class BusinessCardStore {
             cards[index].tags.removeAll { $0 == name }
         }
         try persist()
+    }
+
+    @MainActor
+    static func resetPersistentStore() {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        try? FileManager.default.removeItem(at: documents.appendingPathComponent("businesscards.json"))
+        try? FileManager.default.removeItem(at: documents.appendingPathComponent("Images", isDirectory: true))
+    }
+}
+
+enum BusinessCardStoreError: LocalizedError {
+    case cardNotFound
+    case emptyTag
+
+    var errorDescription: String? {
+        switch self {
+        case .cardNotFound:
+            return "找不到要更新的名片"
+        case .emptyTag:
+            return "标签名称不能为空"
+        }
     }
 }

@@ -32,7 +32,7 @@ struct ScannerView: View {
             case .capture:
                 CaptureView(
                     onPhoto: { data in
-                        originalImage = UIImage(data: data)
+                        originalImage = UIImage(data: data)?.normalizedUp
                         step = .detection
                     },
                     onCancel: { step = .entry }
@@ -67,7 +67,8 @@ struct ScannerView: View {
                         processedImage: processedImage,
                         store: store,
                         onSaved: { dismiss() },
-                        onRetake: { step = .entry }
+                        onRetake: { step = .entry },
+                        onCancel: { step = .entry }
                     )
                 }
             }
@@ -113,7 +114,7 @@ struct ScannerView: View {
         Task {
             guard let data = try? await item.loadTransferable(type: Data.self) else { return }
             await MainActor.run {
-                originalImage = UIImage(data: data)
+                originalImage = UIImage(data: data)?.normalizedUp
                 step = .detection
             }
         }

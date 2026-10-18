@@ -49,7 +49,7 @@ final class CaptureViewModel {
                 guard let self else { return }
                 switch result {
                 case .success(let data):
-                    self.capturedImage = UIImage(data: data)
+                    self.capturedImage = UIImage(data: data)?.normalizedUp
                     self.screen = .captured
                 case .failure(let error):
                     self.errorMessage = error.localizedDescription

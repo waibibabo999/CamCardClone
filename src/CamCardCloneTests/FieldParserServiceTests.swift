@@ -78,4 +78,60 @@ final class FieldParserServiceTests: XCTestCase {
         XCTAssertEqual(value(.email, in: result.fields), "david.chen@example.com")
         XCTAssertEqual(value(.website, in: result.fields), "www.abc-tech-example.com")
     }
+
+    func testKeepsMultiWordCompanyWhole() {
+        let raw = """
+        David Chen
+        Technical Director
+        ABC Technologies Inc.
+        Mobile: +1-415-555-0142
+        Email: david.chen@example.com
+        """
+        let result = parse(raw)
+
+        XCTAssertEqual(value(.company, in: result.fields), "ABC Technologies Inc.")
+        XCTAssertEqual(value(.jobTitle, in: result.fields), "Technical Director")
+    }
+
+    func testDoesNotTreatSystemsArchitectAsCompany() {
+        let raw = """
+        Thomas Wright
+        Systems Architect
+        Orbit Aerospace Systems
+        Mobile: +1-303-555-0155
+        """
+        let result = parse(raw)
+
+        XCTAssertEqual(value(.jobTitle, in: result.fields), "Systems Architect")
+        XCTAssertEqual(value(.company, in: result.fields), "Orbit Aerospace Systems")
+    }
+
+    func testUnlabeledSecondPhoneGoesToAdditionalPhones() {
+        let raw = """
+        罗建华
+        生产部经理
+        中远精密制造有限公司
+        136-5555-6666
+        0512-6677-8899
+        """
+        let result = parse(raw)
+
+        XCTAssertEqual(value(.mobile, in: result.fields), "136-5555-6666")
+        XCTAssertEqual(value(.phone, in: result.fields), "0512-6677-8899")
+    }
+
+    func testBilingualCompanyIsNotTruncated() {
+        let raw = """
+        朱宏明 Hongming Zhu
+        教授 Professor
+        同济大学 Tongji University
+        手机：+86 138-1234-5678
+        """
+        let result = parse(raw)
+
+        XCTAssertEqual(value(.name, in: result.fields), "朱宏明 Hongming Zhu")
+        XCTAssertEqual(value(.jobTitle, in: result.fields), "教授 Professor")
+        XCTAssertEqual(value(.company, in: result.fields), "同济大学 Tongji University")
+        XCTAssertNil(value(.website, in: result.fields))
+    }
 }

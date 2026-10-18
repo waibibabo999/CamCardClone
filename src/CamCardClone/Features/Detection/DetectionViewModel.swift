@@ -12,6 +12,7 @@ final class DetectionViewModel {
     }
 
     private(set) var state: State = .detecting
+    private(set) var usedFallback = false
     private let service: CardDetectionService
 
     init(service: CardDetectionService = VisionCardDetectionService()) {
@@ -21,6 +22,7 @@ final class DetectionViewModel {
     func detect(in image: UIImage) async {
         do {
             let result = try await service.detectCard(in: image)
+            usedFallback = result.usedFallback
             state = .detected(result.corners)
         } catch {
             state = .failed(error.localizedDescription)

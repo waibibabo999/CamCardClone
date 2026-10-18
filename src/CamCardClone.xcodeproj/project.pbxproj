@@ -1,0 +1,869 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0CCFD6B1F528FC858ABBE24B /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62157D60E4102F76ED9ACA90 /* AppRouter.swift */; };
+		0E6C0FDC6FFF452174C8A846 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C799330C8629A58935D8257 /* ExportService.swift */; };
+		13F9C798B592E0ED6730AF2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0327813263DDE3A7C7C2D2F /* Foundation.framework */; };
+		204F3E1DC0D894D79EB0ADF9 /* ManagementFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38239B3463B50FCE01CFF1AE /* ManagementFlowUITests.swift */; };
+		2627208DA0A21513BDC9B320 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4D4F4AC02B0BE9E03EB34B /* SearchView.swift */; };
+		283A830256659BC61F2FAF23 /* CamCardCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF7AE84D8A94104BD10F6BF /* CamCardCloneApp.swift */; };
+		285F6F949FD2DDB143AA0FA2 /* CorrectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2539878514792EF37BD6BD36 /* CorrectionViewModel.swift */; };
+		2F176A742EA2355DE154762E /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECC4D0B809F907FDEA97F82 /* CardDetailView.swift */; };
+		3031098746D0BF08E92C445C /* OCRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4E3F1C4780DBA6AE03690B /* OCRResult.swift */; };
+		33C5E7DF08D5A417933F21F3 /* DetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07AF0C112D6FE4058C12FA /* DetectionView.swift */; };
+		34A5B15566BCCE09060411D8 /* CardField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C23C7DFD0FE8B9A0810F3 /* CardField.swift */; };
+		34D0E92B04A87F34A35C180D /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D8F65794DAC7887F8762A3 /* PermissionService.swift */; };
+		35B416B9530B2786815B1D11 /* CaptureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B0E7AA0EEFEBFD57A27834 /* CaptureViewModel.swift */; };
+		38D4D7037ED121584F9AD339 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0327813263DDE3A7C7C2D2F /* Foundation.framework */; };
+		3A23C6E6CBF8F2197478DA6D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB89D89DED98DB229BE565D4 /* Theme.swift */; };
+		3C047C52FF001A18ED25AD41 /* CardGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA483279A86FA6CC978BE44F /* CardGeometryTests.swift */; };
+		3C6DEF3540EFECCFA851F62E /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F0A51C4536342D9A419A6D /* EditCardView.swift */; };
+		3CED68EB82F05EE134D741C7 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9742DF3CE9E472F5623AED /* VerificationView.swift */; };
+		3DF24179544DAB5C9BE115DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0327813263DDE3A7C7C2D2F /* Foundation.framework */; };
+		3F425C3593C1F671C2883151 /* ExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D746C598F4BDDCF9DF00152B /* ExportServiceTests.swift */; };
+		41BF50BA61F4A8B628C6CD61 /* TagManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FC358C8F710E86ECF141A1 /* TagManagementView.swift */; };
+		469FD4F6E6C4F3C7C1B0BDDF /* CardGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FE797F985DD1E852D6E922 /* CardGeometry.swift */; };
+		4A9C0CFC2E73829FC8E47557 /* GroundTruth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B37C38A38E4D9A1A6655B6 /* GroundTruth.swift */; };
+		4BB9E36BDD6C98E55EE99FFA /* DetectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF775552FBA6CEA2FDBE752A /* DetectionViewModel.swift */; };
+		51842E97B19878044AEAF9BD /* CardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82983ED01CB28E4D90CC5C88 /* CardDetailViewModel.swift */; };
+		5B90FC29EF31E182E1793707 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F8E19B2498929A1C1B06D /* Tag.swift */; };
+		625B84ACB666D6228683315F /* UIImage+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE4F3D53EC420C3752CE775 /* UIImage+Orientation.swift */; };
+		64BADFE0BF5CA49A81B7662B /* OCRService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68F08CFA2314B85C12DCC96 /* OCRService.swift */; };
+		69637AED6A00E191B82E185C /* CardRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A23432356BC9F497005B1 /* CardRowView.swift */; };
+		6BF1E1AD4DEC42BA37446C55 /* CardHolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127368105B284343B0564B3D /* CardHolderViewModel.swift */; };
+		770ACBB171DCDA1206CDEFFD /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC7B4A8A3ACAFEADF0C1E63 /* ScannerView.swift */; };
+		7A24372BE280E0CD8E2AA72C /* T01_T02UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05801241AFD151F6A5B0995 /* T01_T02UITests.swift */; };
+		7F08A372FF13EB394BDA08D6 /* BusinessCardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33537FE9B03AF224DAFAEA8E /* BusinessCardStoreTests.swift */; };
+		7F58DC3E4C7F2B1A74276C9C /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA3316419BEB00CB1532B5 /* ImageStore.swift */; };
+		94C141651E2E696C400BB9C0 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BEBC1DD3C8A4397E06F191 /* ShareSheet.swift */; };
+		9620733DFDDEC6EF362D9D13 /* FieldParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EEF1AD15387CDD076D67B2 /* FieldParserService.swift */; };
+		9702359FC512619E1CB3DD6E /* CorrectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D9B5D174F3039753B60603 /* CorrectionView.swift */; };
+		97AA361533FD8627568B9EE6 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967FAF36295306B9482FDA7D /* VerificationViewModel.swift */; };
+		ABD14527E9DCBFED7B0360BB /* FieldParserServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E07765EAA97F9238382C69 /* FieldParserServiceTests.swift */; };
+		AD85E4F0EBCFB6DF66C7D5C2 /* ImageStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A3571CF20AD9A19A4403A2 /* ImageStoreTests.swift */; };
+		B0312CC382E597F95BF34B6E /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786CEB56CC4BDBA3A84FD93 /* CaptureView.swift */; };
+		BDEDCB331D696B6A0CA1F31F /* CardHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B84BC83EA7B58E87C419E2 /* CardHolderView.swift */; };
+		CBF08770D37EEB514A6A3259 /* BusinessCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B2992B6F3D2F2D02BDC5EE /* BusinessCardStore.swift */; };
+		D76A6D0104595E914CFCEEE7 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3122AF0339F76FA5F893C4 /* CameraService.swift */; };
+		D7C75C5CA2D713707434232E /* CardDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F37CE481AE917D6D35B60D5 /* CardDetectionService.swift */; };
+		EB548CA625E3F3E65A3A0D9C /* UITestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80AB93500710915B35502D /* UITestSupport.swift */; };
+		FE222455CD59638416F2F599 /* BusinessCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC31EFED7E76B89EE6259E /* BusinessCard.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4BB5B5F4904EF049884C4F57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61B31C87C8DFA289AFAA906F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1502BFB15870E022C30BEA7;
+			remoteInfo = CamCardClone;
+		};
+		5CD75757DD1CF126F404C696 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61B31C87C8DFA289AFAA906F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1502BFB15870E022C30BEA7;
+			remoteInfo = CamCardClone;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01DA3316419BEB00CB1532B5 /* ImageStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		127368105B284343B0564B3D /* CardHolderViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardHolderViewModel.swift; sourceTree = "<group>"; };
+		13A3571CF20AD9A19A4403A2 /* ImageStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageStoreTests.swift; sourceTree = "<group>"; };
+		2539878514792EF37BD6BD36 /* CorrectionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CorrectionViewModel.swift; sourceTree = "<group>"; };
+		26B2992B6F3D2F2D02BDC5EE /* BusinessCardStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusinessCardStore.swift; sourceTree = "<group>"; };
+		2F37CE481AE917D6D35B60D5 /* CardDetectionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetectionService.swift; sourceTree = "<group>"; };
+		33537FE9B03AF224DAFAEA8E /* BusinessCardStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusinessCardStoreTests.swift; sourceTree = "<group>"; };
+		376C23C7DFD0FE8B9A0810F3 /* CardField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardField.swift; sourceTree = "<group>"; };
+		38239B3463B50FCE01CFF1AE /* ManagementFlowUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManagementFlowUITests.swift; sourceTree = "<group>"; };
+		3D07AF0C112D6FE4058C12FA /* DetectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetectionView.swift; sourceTree = "<group>"; };
+		3F4E3F1C4780DBA6AE03690B /* OCRResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OCRResult.swift; sourceTree = "<group>"; };
+		3FE4F3D53EC420C3752CE775 /* UIImage+Orientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+Orientation.swift"; sourceTree = "<group>"; };
+		41B84BC83EA7B58E87C419E2 /* CardHolderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardHolderView.swift; sourceTree = "<group>"; };
+		44FC358C8F710E86ECF141A1 /* TagManagementView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagManagementView.swift; sourceTree = "<group>"; };
+		47EEF1AD15387CDD076D67B2 /* FieldParserService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FieldParserService.swift; sourceTree = "<group>"; };
+		5AF7AE84D8A94104BD10F6BF /* CamCardCloneApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CamCardCloneApp.swift; sourceTree = "<group>"; };
+		62157D60E4102F76ED9ACA90 /* AppRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		71F0A51C4536342D9A419A6D /* EditCardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
+		7786CEB56CC4BDBA3A84FD93 /* CaptureView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
+		7A4D4F4AC02B0BE9E03EB34B /* SearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		7C799330C8629A58935D8257 /* ExportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		82983ED01CB28E4D90CC5C88 /* CardDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailViewModel.swift; sourceTree = "<group>"; };
+		8ECC4D0B809F907FDEA97F82 /* CardDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		967FAF36295306B9482FDA7D /* VerificationViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
+		97BEBC1DD3C8A4397E06F191 /* ShareSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		9A102ED22FE5440EC3B3345C /* CamCardCloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamCardCloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A5DB970CED727894B19870F /* CamCardClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CamCardClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AAC31EFED7E76B89EE6259E /* BusinessCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BusinessCard.swift; sourceTree = "<group>"; };
+		9D3122AF0339F76FA5F893C4 /* CameraService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		A05801241AFD151F6A5B0995 /* T01_T02UITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = T01_T02UITests.swift; sourceTree = "<group>"; };
+		A1B0E7AA0EEFEBFD57A27834 /* CaptureViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CaptureViewModel.swift; sourceTree = "<group>"; };
+		AA483279A86FA6CC978BE44F /* CardGeometryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardGeometryTests.swift; sourceTree = "<group>"; };
+		AA9742DF3CE9E472F5623AED /* VerificationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
+		B0D8F65794DAC7887F8762A3 /* PermissionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
+		BD80AB93500710915B35502D /* UITestSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UITestSupport.swift; sourceTree = "<group>"; };
+		BF3A23432356BC9F497005B1 /* CardRowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardRowView.swift; sourceTree = "<group>"; };
+		BF775552FBA6CEA2FDBE752A /* DetectionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetectionViewModel.swift; sourceTree = "<group>"; };
+		C0327813263DDE3A7C7C2D2F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		C5D9B5D174F3039753B60603 /* CorrectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CorrectionView.swift; sourceTree = "<group>"; };
+		C68F08CFA2314B85C12DCC96 /* OCRService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OCRService.swift; sourceTree = "<group>"; };
+		C72F8E19B2498929A1C1B06D /* Tag.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		C8FE797F985DD1E852D6E922 /* CardGeometry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardGeometry.swift; sourceTree = "<group>"; };
+		D746C598F4BDDCF9DF00152B /* ExportServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportServiceTests.swift; sourceTree = "<group>"; };
+		E1B37C38A38E4D9A1A6655B6 /* GroundTruth.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GroundTruth.swift; sourceTree = "<group>"; };
+		E4350DCF1FC734B3F8B387B2 /* CamCardCloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CamCardCloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2E07765EAA97F9238382C69 /* FieldParserServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FieldParserServiceTests.swift; sourceTree = "<group>"; };
+		FAC7B4A8A3ACAFEADF0C1E63 /* ScannerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		FB89D89DED98DB229BE565D4 /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		49931492CF848B9206FEF879 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13F9C798B592E0ED6730AF2E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61C8B81A232BEF8B2CBCC7B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DF24179544DAB5C9BE115DA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2892BD3593D63C7E69D840E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38D4D7037ED121584F9AD339 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0850C21A125F0B696844551C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				62157D60E4102F76ED9ACA90 /* AppRouter.swift */,
+				5AF7AE84D8A94104BD10F6BF /* CamCardCloneApp.swift */,
+				BD80AB93500710915B35502D /* UITestSupport.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		182C25EB54481906FE44EF46 /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				7786CEB56CC4BDBA3A84FD93 /* CaptureView.swift */,
+				A1B0E7AA0EEFEBFD57A27834 /* CaptureViewModel.swift */,
+			);
+			path = Capture;
+			sourceTree = "<group>";
+		};
+		18C22587145373DA97B6F745 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				FAC7B4A8A3ACAFEADF0C1E63 /* ScannerView.swift */,
+			);
+			path = Scanner;
+			sourceTree = "<group>";
+		};
+		202B788A6E0FC5753DE7E2F7 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				26B2992B6F3D2F2D02BDC5EE /* BusinessCardStore.swift */,
+				01DA3316419BEB00CB1532B5 /* ImageStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		226AEF4DA68261F75BC0370D /* Verification */ = {
+			isa = PBXGroup;
+			children = (
+				AA9742DF3CE9E472F5623AED /* VerificationView.swift */,
+				967FAF36295306B9482FDA7D /* VerificationViewModel.swift */,
+			);
+			path = Verification;
+			sourceTree = "<group>";
+		};
+		3EC2AE77C07E0E131241AD51 /* Detection */ = {
+			isa = PBXGroup;
+			children = (
+				3D07AF0C112D6FE4058C12FA /* DetectionView.swift */,
+				BF775552FBA6CEA2FDBE752A /* DetectionViewModel.swift */,
+			);
+			path = Detection;
+			sourceTree = "<group>";
+		};
+		56A969297CA7D60E8B043B1A /* CardHolder */ = {
+			isa = PBXGroup;
+			children = (
+				41B84BC83EA7B58E87C419E2 /* CardHolderView.swift */,
+				127368105B284343B0564B3D /* CardHolderViewModel.swift */,
+				BF3A23432356BC9F497005B1 /* CardRowView.swift */,
+			);
+			path = CardHolder;
+			sourceTree = "<group>";
+		};
+		5981C5CEBABF71B0D2CA27CE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				182C25EB54481906FE44EF46 /* Capture */,
+				56A969297CA7D60E8B043B1A /* CardHolder */,
+				F59343DA55D0DE4C5524DDFC /* Correction */,
+				F42FAC0EFF9B78CE531F859F /* Detail */,
+				3EC2AE77C07E0E131241AD51 /* Detection */,
+				18C22587145373DA97B6F745 /* Scanner */,
+				7511C9A31071866A48DB82F4 /* Search */,
+				C86FD13A492F8EEC52CD1B63 /* Tags */,
+				226AEF4DA68261F75BC0370D /* Verification */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		702CF1924630682B602B20EF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3FE4F3D53EC420C3752CE775 /* UIImage+Orientation.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		742E4A6FE16021FF4F3CF532 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2841F77FF606A903C012535 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		747546861C1925AD12618FDC /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				702CF1924630682B602B20EF /* Extensions */,
+				A82379C82F4C774BC6104E85 /* Models */,
+				202B788A6E0FC5753DE7E2F7 /* Persistence */,
+				9BC6735109E254C0EB534F16 /* Services */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		7511C9A31071866A48DB82F4 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				7A4D4F4AC02B0BE9E03EB34B /* SearchView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		8D9237BEAF27B22B11954B2C /* CamCardCloneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A05801241AFD151F6A5B0995 /* T01_T02UITests.swift */,
+				38239B3463B50FCE01CFF1AE /* ManagementFlowUITests.swift */,
+			);
+			path = CamCardCloneUITests;
+			sourceTree = "<group>";
+		};
+		9BC6735109E254C0EB534F16 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9D3122AF0339F76FA5F893C4 /* CameraService.swift */,
+				2F37CE481AE917D6D35B60D5 /* CardDetectionService.swift */,
+				C8FE797F985DD1E852D6E922 /* CardGeometry.swift */,
+				7C799330C8629A58935D8257 /* ExportService.swift */,
+				47EEF1AD15387CDD076D67B2 /* FieldParserService.swift */,
+				C68F08CFA2314B85C12DCC96 /* OCRService.swift */,
+				B0D8F65794DAC7887F8762A3 /* PermissionService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A2841F77FF606A903C012535 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				C0327813263DDE3A7C7C2D2F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		A82379C82F4C774BC6104E85 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9AAC31EFED7E76B89EE6259E /* BusinessCard.swift */,
+				376C23C7DFD0FE8B9A0810F3 /* CardField.swift */,
+				E1B37C38A38E4D9A1A6655B6 /* GroundTruth.swift */,
+				3F4E3F1C4780DBA6AE03690B /* OCRResult.swift */,
+				C72F8E19B2498929A1C1B06D /* Tag.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B9C7C1D0608878A8FB9D38EA /* CamCardClone */ = {
+			isa = PBXGroup;
+			children = (
+				0850C21A125F0B696844551C /* App */,
+				747546861C1925AD12618FDC /* Core */,
+				5981C5CEBABF71B0D2CA27CE /* Features */,
+				ECA592C3115FBCADAD6BE9F4 /* Resources */,
+			);
+			path = CamCardClone;
+			sourceTree = "<group>";
+		};
+		C0C4B11FF424970A5B4C604F = {
+			isa = PBXGroup;
+			children = (
+				C23AD48C19E5D0BBBDBD52D2 /* Products */,
+				742E4A6FE16021FF4F3CF532 /* Frameworks */,
+				B9C7C1D0608878A8FB9D38EA /* CamCardClone */,
+				F51C9CF1F73AD9E0DBF123FB /* CamCardCloneTests */,
+				8D9237BEAF27B22B11954B2C /* CamCardCloneUITests */,
+			);
+			sourceTree = "<group>";
+		};
+		C23AD48C19E5D0BBBDBD52D2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A5DB970CED727894B19870F /* CamCardClone.app */,
+				E4350DCF1FC734B3F8B387B2 /* CamCardCloneTests.xctest */,
+				9A102ED22FE5440EC3B3345C /* CamCardCloneUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C86FD13A492F8EEC52CD1B63 /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				44FC358C8F710E86ECF141A1 /* TagManagementView.swift */,
+			);
+			path = Tags;
+			sourceTree = "<group>";
+		};
+		ECA592C3115FBCADAD6BE9F4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FB89D89DED98DB229BE565D4 /* Theme.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F42FAC0EFF9B78CE531F859F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				8ECC4D0B809F907FDEA97F82 /* CardDetailView.swift */,
+				82983ED01CB28E4D90CC5C88 /* CardDetailViewModel.swift */,
+				71F0A51C4536342D9A419A6D /* EditCardView.swift */,
+				97BEBC1DD3C8A4397E06F191 /* ShareSheet.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		F51C9CF1F73AD9E0DBF123FB /* CamCardCloneTests */ = {
+			isa = PBXGroup;
+			children = (
+				33537FE9B03AF224DAFAEA8E /* BusinessCardStoreTests.swift */,
+				AA483279A86FA6CC978BE44F /* CardGeometryTests.swift */,
+				D746C598F4BDDCF9DF00152B /* ExportServiceTests.swift */,
+				F2E07765EAA97F9238382C69 /* FieldParserServiceTests.swift */,
+				13A3571CF20AD9A19A4403A2 /* ImageStoreTests.swift */,
+			);
+			path = CamCardCloneTests;
+			sourceTree = "<group>";
+		};
+		F59343DA55D0DE4C5524DDFC /* Correction */ = {
+			isa = PBXGroup;
+			children = (
+				C5D9B5D174F3039753B60603 /* CorrectionView.swift */,
+				2539878514792EF37BD6BD36 /* CorrectionViewModel.swift */,
+			);
+			path = Correction;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9780151F97CF175994BC7104 /* CamCardCloneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2C68249255E4F7868F29BC2 /* Build configuration list for PBXNativeTarget "CamCardCloneTests" */;
+			buildPhases = (
+				0DB0076A7096E0643E1D669D /* Sources */,
+				E2892BD3593D63C7E69D840E /* Frameworks */,
+				D47AD74E5D104EBFBEDB25BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D5E84B9F5262EC0CCC76D663 /* PBXTargetDependency */,
+			);
+			name = CamCardCloneTests;
+			productName = CamCardCloneTests;
+			productReference = E4350DCF1FC734B3F8B387B2 /* CamCardCloneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C1502BFB15870E022C30BEA7 /* CamCardClone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 78A521E4BBA0B2EDBA120122 /* Build configuration list for PBXNativeTarget "CamCardClone" */;
+			buildPhases = (
+				9151DD45D61C8DA8595E5FC3 /* Sources */,
+				49931492CF848B9206FEF879 /* Frameworks */,
+				1621710C859A288067BF5A01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CamCardClone;
+			productName = CamCardClone;
+			productReference = 9A5DB970CED727894B19870F /* CamCardClone.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D4503E93B990988D15F0E73A /* CamCardCloneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75F02C796D91E7C5D445E194 /* Build configuration list for PBXNativeTarget "CamCardCloneUITests" */;
+			buildPhases = (
+				C45F597065817467C7AEB8DF /* Sources */,
+				61C8B81A232BEF8B2CBCC7B6 /* Frameworks */,
+				774F6D3579920D3F2CEA28DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				380D38374E2DD0A2342E9395 /* PBXTargetDependency */,
+			);
+			name = CamCardCloneUITests;
+			productName = CamCardCloneUITests;
+			productReference = 9A102ED22FE5440EC3B3345C /* CamCardCloneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		61B31C87C8DFA289AFAA906F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					9780151F97CF175994BC7104 = {
+						DevelopmentTeam = 3X6HQ5S92X;
+						ProvisioningStyle = Automatic;
+					};
+					C1502BFB15870E022C30BEA7 = {
+						DevelopmentTeam = 3X6HQ5S92X;
+						ProvisioningStyle = Automatic;
+					};
+					D4503E93B990988D15F0E73A = {
+						DevelopmentTeam = 3X6HQ5S92X;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D7C0FAB092774FE2FAD06159 /* Build configuration list for PBXProject "CamCardClone" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C0C4B11FF424970A5B4C604F;
+			productRefGroup = C23AD48C19E5D0BBBDBD52D2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C1502BFB15870E022C30BEA7 /* CamCardClone */,
+				9780151F97CF175994BC7104 /* CamCardCloneTests */,
+				D4503E93B990988D15F0E73A /* CamCardCloneUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1621710C859A288067BF5A01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		774F6D3579920D3F2CEA28DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D47AD74E5D104EBFBEDB25BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DB0076A7096E0643E1D669D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F08A372FF13EB394BDA08D6 /* BusinessCardStoreTests.swift in Sources */,
+				3C047C52FF001A18ED25AD41 /* CardGeometryTests.swift in Sources */,
+				3F425C3593C1F671C2883151 /* ExportServiceTests.swift in Sources */,
+				ABD14527E9DCBFED7B0360BB /* FieldParserServiceTests.swift in Sources */,
+				AD85E4F0EBCFB6DF66C7D5C2 /* ImageStoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9151DD45D61C8DA8595E5FC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CCFD6B1F528FC858ABBE24B /* AppRouter.swift in Sources */,
+				283A830256659BC61F2FAF23 /* CamCardCloneApp.swift in Sources */,
+				625B84ACB666D6228683315F /* UIImage+Orientation.swift in Sources */,
+				FE222455CD59638416F2F599 /* BusinessCard.swift in Sources */,
+				34A5B15566BCCE09060411D8 /* CardField.swift in Sources */,
+				4A9C0CFC2E73829FC8E47557 /* GroundTruth.swift in Sources */,
+				3031098746D0BF08E92C445C /* OCRResult.swift in Sources */,
+				5B90FC29EF31E182E1793707 /* Tag.swift in Sources */,
+				CBF08770D37EEB514A6A3259 /* BusinessCardStore.swift in Sources */,
+				7F58DC3E4C7F2B1A74276C9C /* ImageStore.swift in Sources */,
+				D76A6D0104595E914CFCEEE7 /* CameraService.swift in Sources */,
+				D7C75C5CA2D713707434232E /* CardDetectionService.swift in Sources */,
+				469FD4F6E6C4F3C7C1B0BDDF /* CardGeometry.swift in Sources */,
+				0E6C0FDC6FFF452174C8A846 /* ExportService.swift in Sources */,
+				9620733DFDDEC6EF362D9D13 /* FieldParserService.swift in Sources */,
+				64BADFE0BF5CA49A81B7662B /* OCRService.swift in Sources */,
+				34D0E92B04A87F34A35C180D /* PermissionService.swift in Sources */,
+				B0312CC382E597F95BF34B6E /* CaptureView.swift in Sources */,
+				35B416B9530B2786815B1D11 /* CaptureViewModel.swift in Sources */,
+				BDEDCB331D696B6A0CA1F31F /* CardHolderView.swift in Sources */,
+				6BF1E1AD4DEC42BA37446C55 /* CardHolderViewModel.swift in Sources */,
+				69637AED6A00E191B82E185C /* CardRowView.swift in Sources */,
+				9702359FC512619E1CB3DD6E /* CorrectionView.swift in Sources */,
+				285F6F949FD2DDB143AA0FA2 /* CorrectionViewModel.swift in Sources */,
+				2F176A742EA2355DE154762E /* CardDetailView.swift in Sources */,
+				51842E97B19878044AEAF9BD /* CardDetailViewModel.swift in Sources */,
+				3C6DEF3540EFECCFA851F62E /* EditCardView.swift in Sources */,
+				94C141651E2E696C400BB9C0 /* ShareSheet.swift in Sources */,
+				33C5E7DF08D5A417933F21F3 /* DetectionView.swift in Sources */,
+				4BB9E36BDD6C98E55EE99FFA /* DetectionViewModel.swift in Sources */,
+				770ACBB171DCDA1206CDEFFD /* ScannerView.swift in Sources */,
+				2627208DA0A21513BDC9B320 /* SearchView.swift in Sources */,
+				41BF50BA61F4A8B628C6CD61 /* TagManagementView.swift in Sources */,
+				3CED68EB82F05EE134D741C7 /* VerificationView.swift in Sources */,
+				97AA361533FD8627568B9EE6 /* VerificationViewModel.swift in Sources */,
+				3A23C6E6CBF8F2197478DA6D /* Theme.swift in Sources */,
+				EB548CA625E3F3E65A3A0D9C /* UITestSupport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C45F597065817467C7AEB8DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A24372BE280E0CD8E2AA72C /* T01_T02UITests.swift in Sources */,
+				204F3E1DC0D894D79EB0ADF9 /* ManagementFlowUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		380D38374E2DD0A2342E9395 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CamCardClone;
+			target = C1502BFB15870E022C30BEA7 /* CamCardClone */;
+			targetProxy = 4BB5B5F4904EF049884C4F57 /* PBXContainerItemProxy */;
+		};
+		D5E84B9F5262EC0CCC76D663 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CamCardClone;
+			target = C1502BFB15870E022C30BEA7 /* CamCardClone */;
+			targetProxy = 5CD75757DD1CF126F404C696 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4210337153265DB5E63B4156 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X6HQ5S92X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CamCardClone/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhc.CamCardClone;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		864C572D2252DE4D0B304086 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X6HQ5S92X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CamCardClone/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhc.CamCardClone;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8D6B8B6BAFC0906AF9FD7093 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X6HQ5S92X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhc.CamCardCloneUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CamCardClone;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		98B3CA248F888A6A5ACE38A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X6HQ5S92X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhc.CamCardCloneTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CamCardClone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CamCardClone";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9A4175D6D822C2D270238AB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B32789288DEEEB30D515AF50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F53EAC2EFA2BBB22BEAF2D90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X6HQ5S92X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhc.CamCardCloneUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CamCardClone;
+			};
+			name = Debug;
+		};
+		F8EFC9FE24CB68C358FCBA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3X6HQ5S92X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhc.CamCardCloneTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CamCardClone.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CamCardClone";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		75F02C796D91E7C5D445E194 /* Build configuration list for PBXNativeTarget "CamCardCloneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D6B8B6BAFC0906AF9FD7093 /* Release */,
+				F53EAC2EFA2BBB22BEAF2D90 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		78A521E4BBA0B2EDBA120122 /* Build configuration list for PBXNativeTarget "CamCardClone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4210337153265DB5E63B4156 /* Release */,
+				864C572D2252DE4D0B304086 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2C68249255E4F7868F29BC2 /* Build configuration list for PBXNativeTarget "CamCardCloneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98B3CA248F888A6A5ACE38A0 /* Release */,
+				F8EFC9FE24CB68C358FCBA79 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7C0FAB092774FE2FAD06159 /* Build configuration list for PBXProject "CamCardClone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A4175D6D822C2D270238AB4 /* Debug */,
+				B32789288DEEEB30D515AF50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 61B31C87C8DFA289AFAA906F /* Project object */;
+}
