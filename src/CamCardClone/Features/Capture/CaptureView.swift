@@ -11,6 +11,8 @@ struct CaptureView: View {
     @State private var pickerItem: PhotosPickerItem?
     @State private var recognitionMode: RecognitionMode = .basic
     @State private var captureMode: CaptureMode = .single
+    @State private var centeredMode: CaptureMode? = .single
+    @State private var modeNotice: String?
     @State private var notice: String?
 
     private enum RecognitionMode {
@@ -18,11 +20,13 @@ struct CaptureView: View {
         case highAccuracy
     }
 
-    private enum CaptureMode: String, CaseIterable {
+    private enum CaptureMode: String, CaseIterable, Hashable, Identifiable {
         case continuous = "连续拍摄"
         case multi = "多张拍摄"
         case single = "单张拍摄"
         case qr = "二维码"
+
+        var id: Self { self }
     }
 
     @MainActor
@@ -178,31 +182,82 @@ struct CaptureView: View {
     }
 
     private var captureModeBar: some View {
-        HStack(spacing: 0) {
-            ForEach(CaptureMode.allCases, id: \.self) { mode in
-                Button {
-                    if mode == .single {
-                        captureMode = mode
-                    } else {
-                        notice = "\(mode.rawValue)不在本次功能切片内。"
+        VStack(spacing: 5) {
+            if let modeNotice {
+                Text(modeNotice)
+                    .font(.caption)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Color.white.opacity(0.14))
+                    .clipShape(Capsule())
+                    .transition(.opacity)
+            }
+
+            GeometryReader { geometry in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 0) {
+                        ForEach(CaptureMode.allCases) { mode in
+                            Button {
+                                withAnimation(.easeOut(duration: 0.2)) {
+                                    centeredMode = mode
+                                    captureMode = mode
+                                }
+                                if mode != .single {
+                                    showModeNotice(mode)
+                                } else {
+                                    modeNotice = nil
+                                }
+                            } label: {
+                                VStack(spacing: 7) {
+                                    Text(mode.rawValue)
+                                        .font(.subheadline.weight(captureMode == mode ? .semibold : .regular))
+                                        .foregroundStyle(captureMode == mode ? .white : .white.opacity(0.65))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+                                    Rectangle()
+                                        .fill(captureMode == mode ? Color.blue : Color.clear)
+                                        .frame(height: 2)
+                                }
+                                .frame(width: 68)
+                            }
+                            .buttonStyle(.plain)
+                            .id(mode)
+                        }
                     }
-                } label: {
-                    VStack(spacing: 7) {
-                        Text(mode.rawValue)
-                            .font(.subheadline.weight(captureMode == mode ? .semibold : .regular))
-                            .foregroundStyle(captureMode == mode ? .white : .white.opacity(0.65))
-                            .lineLimit(1)
-                        Rectangle()
-                            .fill(captureMode == mode ? Color.blue : Color.clear)
-                            .frame(height: 2)
-                    }
-                    .frame(maxWidth: .infinity)
+                    .scrollTargetLayout()
                 }
-                .buttonStyle(.plain)
+                .scrollTargetBehavior(.viewAligned)
+                .scrollPosition(id: $centeredMode, anchor: .center)
+                .contentMargins(
+                    .horizontal,
+                    max(0, (geometry.size.width - 68) / 2),
+                    for: .scrollContent
+                )
+                .onChange(of: centeredMode) { _, newValue in
+                    guard let newMode = newValue, newMode != captureMode else { return }
+                    captureMode = newMode
+                    if newMode != .single {
+                        showModeNotice(newMode)
+                    } else {
+                        modeNotice = nil
+                    }
+                }
+            }
+            .frame(height: 42)
+        }
+        .padding(.top, 2)
+        .padding(.bottom, 10)
+        .animation(.easeOut(duration: 0.2), value: modeNotice)
+    }
+
+    private func showModeNotice(_ mode: CaptureMode) {
+        modeNotice = "\(mode.rawValue)不在本次功能切片内"
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if captureMode == mode {
+                modeNotice = nil
             }
         }
-        .padding(.top, 4)
-        .padding(.bottom, 14)
     }
 
     private var captureControls: some View {
