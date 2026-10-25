@@ -68,17 +68,22 @@ struct CaptureView: View {
 
     private var cameraScreen: some View {
         GeometryReader { geometry in
+            let frameWidth = geometry.size.width * 0.76
+            let frameHeight = min(geometry.size.height * 0.62, 620)
+            let frameRect = CGRect(
+                x: (geometry.size.width - frameWidth) / 2,
+                y: geometry.size.height * 0.42 - frameHeight / 2,
+                width: frameWidth,
+                height: frameHeight
+            )
+
             ZStack {
                 Color.black.ignoresSafeArea()
                 CameraPreviewView(session: viewModel.session)
                     .ignoresSafeArea()
 
-                ScanMask(frameRect: CGRect(
-                    x: (geometry.size.width - geometry.size.width * 0.76) / 2,
-                    y: (geometry.size.height - min(geometry.size.height * 0.60, 560)) / 2,
-                    width: geometry.size.width * 0.76,
-                    height: min(geometry.size.height * 0.60, 560)
-                ))
+                ScanMask(frameRect: frameRect)
+                scanFrame(frameRect: frameRect)
 
                 VStack(spacing: 0) {
                     topBar
@@ -87,11 +92,6 @@ struct CaptureView: View {
                         .padding(.bottom, 2)
                         .background(Color.black.ignoresSafeArea(edges: .top))
 
-                    Spacer(minLength: 0)
-                    documentFrame(
-                        width: geometry.size.width * 0.76,
-                        height: min(geometry.size.height * 0.60, 560)
-                    )
                     Spacer(minLength: 0)
 
                     VStack(spacing: 0) {
@@ -109,6 +109,29 @@ struct CaptureView: View {
                 ProgressView()
                     .tint(.white)
             }
+        }
+    }
+
+    private func scanFrame(frameRect: CGRect) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 2)
+                .stroke(Color.white.opacity(0.95), lineWidth: 2)
+                .frame(width: frameRect.width, height: frameRect.height)
+                .position(x: frameRect.midX, y: frameRect.midY)
+
+            Text("请将镜头靠近名片")
+                .font(.footnote)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Color.black.opacity(0.55))
+                .clipShape(Capsule())
+                .position(x: frameRect.midX, y: frameRect.minY + 28)
+
+            Label("轻触照亮", systemImage: "flashlight.on.fill")
+                .font(.subheadline)
+                .foregroundStyle(.white)
+                .position(x: frameRect.midX, y: frameRect.maxY - 30)
         }
     }
 
@@ -163,31 +186,6 @@ struct CaptureView: View {
         .buttonStyle(.plain)
     }
 
-    private func documentFrame(width: CGFloat, height: CGFloat) -> some View {
-        ZStack(alignment: .top) {
-            RoundedRectangle(cornerRadius: 2)
-                .stroke(Color.white.opacity(0.95), lineWidth: 2)
-
-            Text("请将镜头靠近名片")
-                .font(.footnote)
-                .foregroundStyle(.white)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(Color.black.opacity(0.55))
-                .clipShape(Capsule())
-                .offset(y: 10)
-
-            VStack {
-                Spacer()
-                Label("轻触照亮", systemImage: "flashlight.on.fill")
-                    .font(.subheadline)
-                    .foregroundStyle(.white)
-                    .padding(.bottom, 18)
-            }
-        }
-        .frame(width: width, height: height)
-    }
-
     private var captureModeBar: some View {
         VStack(spacing: 5) {
             if let modeNotice {
@@ -233,9 +231,13 @@ struct CaptureView: View {
                                 .id(mode)
                                 .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                     content
-                                        .scaleEffect(phase.isIdentity ? 1 : 0.84)
-                                        .opacity(phase.isIdentity ? 1 : 0.42)
-                                        .blur(radius: phase.isIdentity ? 0 : 0.8)
+                                        .rotation3DEffect(
+                                            .degrees(phase.isIdentity ? 0 : (phase.value < 0 ? 18.0 : -18.0)),
+                                            axis: (x: 0, y: 1, z: 0),
+                                            perspective: 0.55
+                                        )
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                                        .opacity(phase.isIdentity ? 1 : 0.7)
                                 }
                             }
                         }
@@ -247,18 +249,6 @@ struct CaptureView: View {
                         .horizontal,
                         max(0, (geometry.size.width - 68) / 2),
                         for: .scrollContent
-                    )
-                    .mask(
-                        LinearGradient(
-                            stops: [
-                                .init(color: .clear, location: 0),
-                                .init(color: .white, location: 0.12),
-                                .init(color: .white, location: 0.88),
-                                .init(color: .clear, location: 1)
-                            ],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
                     )
                     .onChange(of: centeredMode) { _, newValue in
                         guard let newMode = newValue, newMode != captureMode else { return }
