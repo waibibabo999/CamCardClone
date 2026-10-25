@@ -73,6 +73,13 @@ struct CaptureView: View {
                 CameraPreviewView(session: viewModel.session)
                     .ignoresSafeArea()
 
+                ScanMask(frameRect: CGRect(
+                    x: (geometry.size.width - geometry.size.width * 0.76) / 2,
+                    y: (geometry.size.height - min(geometry.size.height * 0.60, 560)) / 2,
+                    width: geometry.size.width * 0.76,
+                    height: min(geometry.size.height * 0.60, 560)
+                ))
+
                 VStack(spacing: 0) {
                     topBar
                         .padding(.horizontal, 16)
@@ -82,8 +89,8 @@ struct CaptureView: View {
 
                     Spacer(minLength: 0)
                     documentFrame(
-                        width: geometry.size.width * 0.78,
-                        height: min(geometry.size.height * 0.56, 520)
+                        width: geometry.size.width * 0.76,
+                        height: min(geometry.size.height * 0.60, 560)
                     )
                     Spacer(minLength: 0)
 
@@ -109,7 +116,7 @@ struct CaptureView: View {
         HStack(spacing: 12) {
             Button(action: onCancel) {
                 Image(systemName: "xmark")
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(.system(size: 24, weight: .light))
                     .foregroundStyle(.white)
                     .frame(width: 36, height: 36)
             }
@@ -133,7 +140,7 @@ struct CaptureView: View {
                 notice = "更多识别设置不在本次作业切片内。"
             } label: {
                 Image(systemName: "ellipsis")
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(.system(size: 20, weight: .regular))
                     .foregroundStyle(.white)
                     .frame(width: 36, height: 36)
             }
@@ -148,7 +155,7 @@ struct CaptureView: View {
             Text(title)
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(recognitionMode == mode ? .black : .white)
-                .padding(.horizontal, 14)
+                .padding(.horizontal, 20)
                 .frame(height: 27)
                 .background(recognitionMode == mode ? Color.white : Color.clear)
                 .clipShape(Capsule())
@@ -210,20 +217,26 @@ struct CaptureView: View {
                                         modeNotice = nil
                                     }
                                 } label: {
-                                    VStack(spacing: 7) {
+                                    VStack(spacing: 5) {
+                                        Rectangle()
+                                            .fill(captureMode == mode ? Color.blue : Color.clear)
+                                            .frame(width: 48, height: 2)
                                         Text(mode.rawValue)
                                             .font(.footnote.weight(captureMode == mode ? .semibold : .regular))
                                             .foregroundStyle(captureMode == mode ? .white : .white.opacity(0.65))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.8)
-                                        Rectangle()
-                                            .fill(captureMode == mode ? Color.blue : Color.clear)
-                                            .frame(height: 2)
                                     }
                                     .frame(width: 68)
                                 }
                                 .buttonStyle(.plain)
                                 .id(mode)
+                                .scrollTransition(.interactive, axis: .horizontal) { content, phase in
+                                    content
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.84)
+                                        .opacity(phase.isIdentity ? 1 : 0.42)
+                                        .blur(radius: phase.isIdentity ? 0 : 0.8)
+                                }
                             }
                         }
                         .scrollTargetLayout()
@@ -234,6 +247,18 @@ struct CaptureView: View {
                         .horizontal,
                         max(0, (geometry.size.width - 68) / 2),
                         for: .scrollContent
+                    )
+                    .mask(
+                        LinearGradient(
+                            stops: [
+                                .init(color: .clear, location: 0),
+                                .init(color: .white, location: 0.12),
+                                .init(color: .white, location: 0.88),
+                                .init(color: .clear, location: 1)
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
                     .onChange(of: centeredMode) { _, newValue in
                         guard let newMode = newValue, newMode != captureMode else { return }
@@ -292,8 +317,8 @@ struct CaptureView: View {
             } label: {
                 Circle()
                     .strokeBorder(Color.white.opacity(0.9), lineWidth: 6)
-                    .frame(width: 78, height: 78)
-                    .overlay(Circle().fill(.white).padding(8))
+                    .frame(width: 82, height: 82)
+                    .overlay(Circle().fill(.white).padding(9))
             }
             .disabled(viewModel.screen != .ready)
             .accessibilityLabel("拍摄")
@@ -314,6 +339,7 @@ struct CaptureView: View {
                 .frame(width: 56)
             }
         }
+        .padding(.horizontal, 24)
         .padding(.top, 2)
     }
 
@@ -422,4 +448,21 @@ private struct CameraPreviewView: UIViewRepresentable {
 private final class PreviewUIView: UIView {
     override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
     var previewLayer: AVCaptureVideoPreviewLayer { layer as! AVCaptureVideoPreviewLayer }
+}
+
+private struct ScanMask: View {
+    let frameRect: CGRect
+
+    var body: some View {
+        Canvas { context, size in
+            var path = Path(CGRect(origin: .zero, size: size))
+            path.addRoundedRect(in: frameRect, cornerSize: CGSize(width: 2, height: 2))
+            context.fill(
+                path,
+                with: .color(.black.opacity(0.28)),
+                style: FillStyle(eoFill: true)
+            )
+        }
+        .allowsHitTesting(false)
+    }
 }
