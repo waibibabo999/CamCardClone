@@ -76,8 +76,8 @@ struct CaptureView: View {
                 VStack(spacing: 0) {
                     topBar
                         .padding(.horizontal, 16)
-                        .padding(.top, 8)
-                        .padding(.bottom, 10)
+                        .padding(.top, 0)
+                        .padding(.bottom, 2)
                         .background(Color.black.ignoresSafeArea(edges: .top))
 
                     Spacer(minLength: 0)
@@ -93,7 +93,7 @@ struct CaptureView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 10)
-                    .padding(.bottom, 14)
+                    .padding(.bottom, 54)
                     .background(Color.black.ignoresSafeArea(edges: .bottom))
                 }
             }
@@ -111,7 +111,7 @@ struct CaptureView: View {
                 Image(systemName: "xmark")
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.white)
-                    .frame(width: 40, height: 40)
+                    .frame(width: 36, height: 36)
             }
             .accessibilityLabel("关闭")
             .accessibilityIdentifier("closeScanButton")
@@ -135,10 +135,10 @@ struct CaptureView: View {
                 Image(systemName: "ellipsis")
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(.white)
-                    .frame(width: 40, height: 40)
+                    .frame(width: 36, height: 36)
             }
         }
-        .padding(.top, 8)
+        .frame(height: 38)
     }
 
     private func recognitionButton(_ mode: RecognitionMode, title: String) -> some View {
@@ -146,10 +146,10 @@ struct CaptureView: View {
             recognitionMode = mode
         } label: {
             Text(title)
-                .font(.subheadline.weight(.semibold))
+                .font(.footnote.weight(.semibold))
                 .foregroundStyle(recognitionMode == mode ? .black : .white)
-                .padding(.horizontal, 18)
-                .frame(height: 30)
+                .padding(.horizontal, 14)
+                .frame(height: 27)
                 .background(recognitionMode == mode ? Color.white : Color.clear)
                 .clipShape(Capsule())
         }
@@ -162,7 +162,7 @@ struct CaptureView: View {
                 .stroke(Color.white.opacity(0.95), lineWidth: 2)
 
             Text("请将镜头靠近名片")
-                .font(.subheadline)
+                .font(.footnote)
                 .foregroundStyle(.white)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
@@ -195,52 +195,64 @@ struct CaptureView: View {
             }
 
             GeometryReader { geometry in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 0) {
-                        ForEach(CaptureMode.allCases) { mode in
-                            Button {
-                                withAnimation(.easeOut(duration: 0.2)) {
-                                    centeredMode = mode
-                                    captureMode = mode
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 0) {
+                            ForEach(CaptureMode.allCases) { mode in
+                                Button {
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        centeredMode = mode
+                                        captureMode = mode
+                                    }
+                                    if mode != .single {
+                                        showModeNotice(mode)
+                                    } else {
+                                        modeNotice = nil
+                                    }
+                                } label: {
+                                    VStack(spacing: 7) {
+                                        Text(mode.rawValue)
+                                            .font(.footnote.weight(captureMode == mode ? .semibold : .regular))
+                                            .foregroundStyle(captureMode == mode ? .white : .white.opacity(0.65))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.8)
+                                        Rectangle()
+                                            .fill(captureMode == mode ? Color.blue : Color.clear)
+                                            .frame(height: 2)
+                                    }
+                                    .frame(width: 68)
                                 }
-                                if mode != .single {
-                                    showModeNotice(mode)
-                                } else {
-                                    modeNotice = nil
-                                }
-                            } label: {
-                                VStack(spacing: 7) {
-                                    Text(mode.rawValue)
-                                        .font(.subheadline.weight(captureMode == mode ? .semibold : .regular))
-                                        .foregroundStyle(captureMode == mode ? .white : .white.opacity(0.65))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.8)
-                                    Rectangle()
-                                        .fill(captureMode == mode ? Color.blue : Color.clear)
-                                        .frame(height: 2)
-                                }
-                                .frame(width: 68)
+                                .buttonStyle(.plain)
+                                .id(mode)
                             }
-                            .buttonStyle(.plain)
-                            .id(mode)
+                        }
+                        .scrollTargetLayout()
+                    }
+                    .scrollTargetBehavior(.viewAligned)
+                    .scrollPosition(id: $centeredMode, anchor: .center)
+                    .contentMargins(
+                        .horizontal,
+                        max(0, (geometry.size.width - 68) / 2),
+                        for: .scrollContent
+                    )
+                    .onChange(of: centeredMode) { _, newValue in
+                        guard let newMode = newValue, newMode != captureMode else { return }
+                        captureMode = newMode
+                        if newMode != .single {
+                            showModeNotice(newMode)
+                        } else {
+                            modeNotice = nil
                         }
                     }
-                    .scrollTargetLayout()
-                }
-                .scrollTargetBehavior(.viewAligned)
-                .scrollPosition(id: $centeredMode, anchor: .center)
-                .contentMargins(
-                    .horizontal,
-                    max(0, (geometry.size.width - 68) / 2),
-                    for: .scrollContent
-                )
-                .onChange(of: centeredMode) { _, newValue in
-                    guard let newMode = newValue, newMode != captureMode else { return }
-                    captureMode = newMode
-                    if newMode != .single {
-                        showModeNotice(newMode)
-                    } else {
-                        modeNotice = nil
+                    .onAppear {
+                        // ScrollPosition does not always resolve on the first layout pass.
+                        DispatchQueue.main.async {
+                            var transaction = Transaction()
+                            transaction.disablesAnimations = true
+                            withTransaction(transaction) {
+                                proxy.scrollTo(CaptureMode.single, anchor: .center)
+                            }
+                        }
                     }
                 }
             }
