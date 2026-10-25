@@ -18,7 +18,7 @@ struct ScannerView: View {
         case verification
     }
 
-    @State private var step: Step = .entry
+    @State private var step: Step = .capture
     @State private var originalImage: UIImage?
     @State private var processedImage: UIImage?
     @State private var corners: [CGPoint] = []
@@ -35,7 +35,7 @@ struct ScannerView: View {
                         originalImage = UIImage(data: data)?.normalizedUp
                         step = .detection
                     },
-                    onCancel: { step = .entry }
+                    onCancel: { dismiss() }
                 )
             case .detection:
                 if let originalImage {
@@ -45,7 +45,7 @@ struct ScannerView: View {
                             corners = detected
                             step = .correction
                         },
-                        onCancel: { step = .entry }
+                        onCancel: { step = .capture }
                     )
                 }
             case .correction:
@@ -67,8 +67,8 @@ struct ScannerView: View {
                         processedImage: processedImage,
                         store: store,
                         onSaved: { dismiss() },
-                        onRetake: { step = .entry },
-                        onCancel: { step = .entry }
+                        onRetake: { step = .capture },
+                        onCancel: { step = .capture }
                     )
                 }
             }

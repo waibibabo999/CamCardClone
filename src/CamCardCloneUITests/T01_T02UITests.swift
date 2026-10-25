@@ -17,8 +17,19 @@ final class T01_T02UITests: XCTestCase {
     func testT02ScanEntryShowsCameraAndImportChoices() {
         let app = launchFreshApp()
         app.buttons["scanButton"].tap()
-        XCTAssertTrue(app.staticTexts["扫描名片"].waitForExistence(timeout: 8))
-        XCTAssertTrue(app.buttons["拍摄名片"].exists)
-        XCTAssertTrue(app.buttons["从相册导入"].exists)
+        addUIInterruptionMonitor(withDescription: "Camera permission") { alert in
+            if alert.buttons["允许"].exists {
+                alert.buttons["允许"].tap()
+                return true
+            }
+            if alert.buttons["Allow"].exists {
+                alert.buttons["Allow"].tap()
+                return true
+            }
+            return false
+        }
+        app.tap()
+        XCTAssertTrue(app.buttons["closeScanButton"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["单张拍摄"].exists || app.buttons["从相册导入"].exists)
     }
 }

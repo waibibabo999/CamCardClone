@@ -216,21 +216,44 @@ private struct CardHolderHome: View {
             if viewModel.cards.isEmpty {
                 promoRow
             } else {
-                ForEach(viewModel.cards) { card in
-                    NavigationLink(value: AppRoute.detail(card.id)) {
-                        CardRowView(card: card)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 10)
+                ForEach(groupedCards) { group in
+                    Text(group.date.formatted(date: .numeric, time: .omitted))
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.textSecondary)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 8)
+                        .padding(.bottom, 2)
+                    ForEach(group.cards) { card in
+                        NavigationLink(value: AppRoute.detail(card.id)) {
+                            CardRowView(card: card)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 12)
+                        }
+                        .buttonStyle(.plain)
+                        Divider()
+                            .padding(.leading, 124)
                     }
-                    .buttonStyle(.plain)
-                    Divider()
-                        .padding(.leading, 96)
                 }
             }
         }
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .padding(.horizontal, 8)
+        .clipShape(UnevenRoundedRectangle(
+            topLeadingRadius: 14,
+            bottomLeadingRadius: 0,
+            bottomTrailingRadius: 0,
+            topTrailingRadius: 14,
+            style: .continuous
+        ))
+    }
+
+    private var groupedCards: [CardDayGroup] {
+        let calendar = Calendar.current
+        let groups = Dictionary(grouping: viewModel.cards) {
+            calendar.startOfDay(for: $0.updatedAt)
+        }
+        return groups
+            .map { CardDayGroup(date: $0.key, cards: $0.value) }
+            .sorted { $0.date > $1.date }
     }
 
     private var promoRow: some View {
@@ -256,6 +279,12 @@ private struct CardHolderHome: View {
         .padding(.bottom, 22)
         .accessibilityIdentifier("emptyPromo")
     }
+}
+
+private struct CardDayGroup: Identifiable {
+    let date: Date
+    let cards: [BusinessCard]
+    var id: Date { date }
 }
 
 private struct QuickActionLabel: View {

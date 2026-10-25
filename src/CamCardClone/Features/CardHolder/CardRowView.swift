@@ -20,7 +20,7 @@ struct CardRowView: View {
                         .foregroundStyle(Theme.textSecondary)
                 }
             }
-            .frame(width: 72, height: 48)
+            .frame(width: 96, height: 60)
             .background(Theme.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 8))
 
@@ -40,9 +40,6 @@ struct CardRowView: View {
                         .foregroundStyle(Theme.textSecondary)
                         .lineLimit(1)
                 }
-                Text(card.updatedAt.formatted(date: .numeric, time: .shortened))
-                    .font(.caption)
-                    .foregroundStyle(Theme.textSecondary)
                 if !card.tags.isEmpty {
                     Text(card.tags.joined(separator: " · "))
                         .font(.caption)
