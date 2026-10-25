@@ -37,7 +37,7 @@ struct CardHolderView: View {
                 .toolbar(.visible, for: .navigationBar)
             }
         }
-        .sheet(isPresented: $showingScanner) {
+        .fullScreenCover(isPresented: $showingScanner) {
             NavigationStack {
                 ScannerView()
             }

@@ -50,6 +50,7 @@ struct CaptureView: View {
         .onChange(of: pickerItem) { _, item in
             loadImport(item)
         }
+        .preferredColorScheme(.dark)
         .toolbar(.hidden, for: .navigationBar)
         .alert("提示", isPresented: Binding(
             get: { notice != nil },
@@ -62,20 +63,36 @@ struct CaptureView: View {
     }
 
     private var cameraScreen: some View {
-        ZStack {
-            CameraPreviewView(session: viewModel.session)
-                .ignoresSafeArea()
+        GeometryReader { geometry in
+            ZStack {
+                Color.black.ignoresSafeArea()
+                CameraPreviewView(session: viewModel.session)
+                    .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                topBar
-                Spacer(minLength: 12)
-                documentFrame
-                Spacer(minLength: 12)
-                captureModeBar
-                captureControls
+                VStack(spacing: 0) {
+                    topBar
+                        .padding(.horizontal, 16)
+                        .padding(.top, 8)
+                        .padding(.bottom, 10)
+                        .background(Color.black.ignoresSafeArea(edges: .top))
+
+                    Spacer(minLength: 0)
+                    documentFrame(
+                        width: geometry.size.width * 0.78,
+                        height: min(geometry.size.height * 0.56, 520)
+                    )
+                    Spacer(minLength: 0)
+
+                    VStack(spacing: 0) {
+                        captureModeBar
+                        captureControls
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 10)
+                    .padding(.bottom, 14)
+                    .background(Color.black.ignoresSafeArea(edges: .bottom))
+                }
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 18)
 
             if viewModel.screen == .loading {
                 ProgressView()
@@ -135,35 +152,29 @@ struct CaptureView: View {
         .buttonStyle(.plain)
     }
 
-    private var documentFrame: some View {
-        GeometryReader { geometry in
-            let frameWidth = geometry.size.width
-            let frameHeight = geometry.size.height
-            ZStack(alignment: .top) {
-                RoundedRectangle(cornerRadius: 2)
-                    .stroke(Color.white.opacity(0.95), lineWidth: 2)
-                    .frame(width: frameWidth, height: frameHeight)
+    private func documentFrame(width: CGFloat, height: CGFloat) -> some View {
+        ZStack(alignment: .top) {
+            RoundedRectangle(cornerRadius: 2)
+                .stroke(Color.white.opacity(0.95), lineWidth: 2)
 
-                Text("请将镜头靠近名片")
+            Text("请将镜头靠近名片")
+                .font(.subheadline)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Color.black.opacity(0.55))
+                .clipShape(Capsule())
+                .offset(y: 10)
+
+            VStack {
+                Spacer()
+                Label("轻触照亮", systemImage: "flashlight.on.fill")
                     .font(.subheadline)
                     .foregroundStyle(.white)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 8)
-                    .background(Color.black.opacity(0.55))
-                    .clipShape(Capsule())
-                    .offset(y: 10)
-
-                VStack {
-                    Spacer()
-                    Label("轻触照亮", systemImage: "flashlight.on.fill")
-                        .font(.subheadline)
-                        .foregroundStyle(.white)
-                        .padding(.bottom, 18)
-                }
+                    .padding(.bottom, 18)
             }
         }
-        .frame(height: 420)
-        .padding(.horizontal, 16)
+        .frame(width: width, height: height)
     }
 
     private var captureModeBar: some View {
