@@ -1,197 +1,82 @@
-# CamCardClone
+# 名片数字化与联系人管理
 
-移动应用开发课程作业：基于 SDD（Specification-Driven Development）+ TRAE，对“名片全能王（CamCard）”的“名片数字化与联系人管理”功能切片进行 100% 黑盒复刻。
+- 学号：2454284
+- 姓名：梁皓诚
+- 项目：CamCardClone
+- 开发环境：Xcode 27.2、SwiftUI、iOS 27.2 SDK
+- 最低兼容版本：iOS 17.0
 
-## 一、作业目标
+这是我完成的名片数字化与联系人管理项目。应用使用 SwiftUI 开发，可以在 iPhone 上完成名片拍摄、图像校正、文字识别、联系人管理和导出。
 
-以 CamCard 作为黑盒系统，通过观察、操作、记录和测试，建立完整工程闭环：
+## 一、目录说明
 
-> 产品行为 → Specification → Architecture → Implementation → Test → Difference Analysis → Revision → Regression
+| 目录或文件 | 内容 |
+|---|---|
+| `应用源码/` | 可直接用 Xcode 打开的完整工程 |
+| `测试素材/` | 42 张测试名片和对应标准答案 |
+| `界面截图/` | 首页、检测、识别编辑和详情页截图 |
+| `项目报告.md` | 项目背景、功能、实现与总结 |
+| `需求与功能检查.md` | 功能范围、交互需求和检查项目 |
+| `架构与数据设计.md` | 软件结构、核心流程和数据设计 |
+| `测试报告.md` | 构建、自动化测试和识别结果记录 |
 
-不获取源代码，不反编译，不复制专有模型或算法。所有 AI 生成或修改的代码必须通过测试与人工验证才能进入最终版本。
+## 二、如何查看
 
-## 二、复刻范围
+### 运行应用
 
-完整闭环：
+1. 打开 `应用源码/CamCardClone.xcodeproj`。
+2. 在 Xcode 中选择 `CamCardClone` Scheme。
+3. 选择一个 iPhone 模拟器，或连接一台 iPhone。
+4. 使用真机时，在 `Signing & Capabilities` 中选择开发者 Team。
+5. 按 `Command + R` 运行。
 
-    名片夹 / Home
-         ↓
-    扫描名片
-         ↓
-    拍摄 / 图片导入
-         ↓
-    名片区域检测
-         ↓
-    透视 / 方向校正
-         ↓
-    OCR 文字识别
-         ↓
-    联系人字段解析
-         ↓
-    人工确认与修改
-         ↓
-    保存名片
-         ↓
-    名片夹
-         ↓
-    搜索 / 标签 / 查看详情
-         ↓
-    联系人导出
+项目没有服务器、第三方依赖、账号登录或额外的环境配置。首次进入拍照、相册导入和联系人导出功能时，系统会请求对应权限。
 
-### 包含功能
+### 查看测试
 
-- 名片夹首页：空状态、列表、扫描入口、缩略信息、进入详情、搜索入口
-- 拍摄与图片导入：相机预览、权限、快门、返回、取消、重拍、相册导入、结果预览
-- 名片区域检测与校正：自动边界检测、透视校正、方向校正、手动调整、确认、重拍
-- OCR 文字识别：中英文、横竖版、多电话、多 Email、字段缺失、复杂背景
-- 联系人字段结构化：Name, Company, Job Title, Mobile, Phone, Fax, Email, Website, Address, Department, Postal Code, Notes
-- 人工校正（Human-in-the-Loop）
-- 名片保存与详情：编辑、删除、返回、点击电话/Email/Website
-- 搜索、标签、备注
-- 本地持久化
-- 联系人导出：系统联系人 / VCF
-- 异常处理：权限拒绝、无法识别、字段为空、取消、返回
+在 Xcode 中按 `Command + U`，会运行 `CamCardCloneTests` 和 `CamCardCloneUITests`。
 
-### 明确不包含
+也可以在终端执行：
 
-登录注册、会员与订阅、支付、广告、云同步、多设备同步、CRM 同步、企业权限、数字名片、QR 交换、AI 企业情报、会议录音、销售漏斗。
+```bash
+xcodebuild \
+  -project CamCardClone.xcodeproj \
+  -scheme CamCardClone \
+  -destination 'platform=iOS Simulator,name=iPhone 17' \
+  test
+```
 
-## 三、100% 复刻的定义
+命令需要在 `应用源码/` 目录中执行。模拟器名称可以按本机已安装的设备调整。
 
-本项目中的 100% 指：
+## 三、功能查看顺序
 
-> 在教师规定的功能边界、参考版本、设备环境和测试用例范围内，实现 100% 的可观察行为等价。
+1. 打开首页，查看空状态、搜索栏、快捷入口和底部操作栏。
+2. 点击页面下方的拍照按钮，允许相机权限，查看取景框与单张拍摄界面。
+3. 没有相机时，可从相册导入 `测试素材/名片图片/zh_02.jpg`。
+4. 观察自动检测、透视校正、高对比度处理和文字识别过程。
+5. 核对姓名、公司、职位、手机、电话和邮箱，点击保存。
+6. 在首页查看按首字母分组的卡片，试试点右侧字母跳转和搜索。
+7. 打开名片详情，查看图片、字段、编辑、正面和背面照片功能。
+8. 打开“分组管理”，创建分组，并测试重命名、排序、删除、多选和名片分组操作。
+9. 在详情页点击“存入通讯录”，测试联系人导出。
 
-覆盖维度：
+## 四、主要功能
 
-- UI 一致性
-- 交互一致性
-- 状态一致性
-- 数据一致性
-- 异常一致性
-- 流程一致性
+- 本地名片保存、搜索、按首字母分组和字母索引跳转。
+- 相机拍摄、相册导入、名片区域检测和透视校正。
+- 高对比度图像辅助、中文与英文识别、字段自动整理。
+- 识别结果人工校对、多电话和多邮箱处理、保存后持久化。
+- 名片详情、字段编辑、正面与背面照片、照片旋转和重新裁切。
+- 分组创建、重命名、排序、删除、名片多选和分组归属管理。
+- 系统联系人写入和 VCF 名片导出。
+- 无正面照片时以姓名首字显示占位卡片。
 
-## 四、AI / OCR 的概率性验收
+人脉地图、人脉分析、消息、好友更新记录、收藏和分享名片目前仅保留入口或提示，不属于本次实现范围。
 
-AI 功能分为两类。
+## 五、构建结果
 
-### 确定性功能
+我在当前 Xcode 环境中完成了无签名 iOS 构建：
 
-UI、导航、状态、保存、编辑、删除、搜索、标签、导出等，要求 Reference Test Suite 100% 通过。
-
-### 概率性功能
-
-OCR、姓名、公司、职位、电话、Email、地址识别等，使用教师提供的固定名片测试集 + Ground Truth 量化评价。要求：
-
-1. 保存 OCR 原始输出
-2. 保存字段解析结果
-3. 与 Ground Truth 比较
-4. 计算字段级准确率
-5. 与参考 App 结果对比
-6. 分析错误原因
-7. 允许人工校正
-
-特别规则：
-
-> AI 不允许补全名片上不存在的信息。没有 Website 就不得虚构 Website。
-
-## 五、技术栈
-
-- UI：SwiftUI + MVVM
-- 部署目标：iOS 17 优先，真机不支持则 iOS 16
-- 导航：NavigationStack
-- 相机：AVFoundation
-- 相册：PhotosPicker
-- 区域检测：Vision VNDetectRectanglesRequest
-- 透视校正：Core Image CIPerspectiveCorrection
-- OCR：Vision VNRecognizeTextRequest
-- 持久化：FileManager + Codable JSON，图片存 Documents/Images
-- 联系人导出：Contacts 框架 / CNContactVCardSerialization
-- 测试：XCTest + XCUITest
-
-## 六、开发方式
-
-- SDD：规格驱动开发
-- TRAE：主要 AI 辅助开发环境
-- Git：版本控制
-- Figma：UI 设计
-- 自动化测试 + 人工验收
-- 小步迭代：实现 → 测试 → 修复 → 回归
-
-禁止“一个 Prompt 生成整个 App”。每次只让 AI 完成一个明确的小任务。
-
-## 七、目录结构
-
-    CamCardClone/
-      README.md
-      PROJECT_RULES.md
-      docs/
-        lab-playbook.md
-        reference-environment.md
-      spec/
-        requirements.md
-        behavior.md
-        acceptance.md
-      design/
-        architecture.md
-        state-model.md
-        data-model.md
-      tasks/
-        implementation-plan.md
-      changes/
-        change-history.md
-      verify/
-        test-cases.md
-        test-results.md
-        regression-results.md
-      ai/
-        prompts.md
-        conversations.md
-        failures.md
-      references/
-        screenshots/reference/
-        screenshots/student/
-        test-images/
-        ground-truth/
-      drafts/
-      tools/
-        generate_test_cards.ps1
-      src/
-
-## 八、Reference Test Suite
-
-确定性测试 T01–T20 必须 100% 通过。详见 `verify/test-cases.md`。
-
-## 九、六周压缩为三周的机房开发策略
-
-- 机房外：规格、设计、测试用例、参考截图、测试名片、Ground Truth、TRAE 提示词、AI 记录、报告
-- 机房内：Xcode 项目、编译、真机调试、模拟器/真机截图、自动测试、PDF/VCF 导出、Git 提交
-
-> 具体到"去机房前 / 机房中 / 机房后"要做什么，见 `docs/lab-playbook.md`。
-
-## 十、状态
-
-主流程、详情、编辑、搜索、标签、VCF/联系人导出已实现，工程文件已入库。
-
-## 十一、构建与测试
-
-用 Xcode 打开：
-
-    src/CamCardClone.xcodeproj
-
-工程包含：
-
-- `CamCardClone` App target
-- `CamCardCloneTests` 单元测试 target
-- `CamCardCloneUITests` UI 测试 target（T01/T02 已编写）
-
-命令行无签名构建：
-
-    xcodebuild \
-      -project src/CamCardClone.xcodeproj \
-      -scheme CamCardClone \
-      -destination 'generic/platform=iOS' \
-      CODE_SIGNING_ALLOWED=NO \
-      build
-
-当前验证状态见 `verify/test-results.md`。相机、相册、Vision OCR 和 UI 流程仍需在真机或可用模拟器上完成最终验收。
+```text
+** BUILD SUCCEEDED **
+```
