@@ -8,6 +8,30 @@ final class ManagementFlowUITests: XCTestCase {
     private func launchSeeded() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-ui-testing-reset", "-ui-testing-seed"]
+        app.launchEnvironment["UITEST_SEED_JSON"] = """
+        {
+          "tags": ["会议", "客户"],
+          "cards": [
+            {
+              "name": "张伟",
+              "company": "上海远景科技有限公司",
+              "jobTitle": "技术总监",
+              "mobile": "+86 138-0013-8000",
+              "email": "zhangwei@example.com",
+              "address": "上海市浦东新区世纪大道 100 号 25 层",
+              "notes": "UI 测试名片",
+              "tags": ["会议"]
+            },
+            {
+              "name": "李静怡",
+              "company": "北京华信医疗科技有限公司",
+              "jobTitle": "产品经理",
+              "mobile": "139-0022-4567",
+              "tags": ["客户"]
+            }
+          ]
+        }
+        """
         app.launch()
         XCTAssertTrue(app.staticTexts["张伟"].waitForExistence(timeout: 12))
         return app
